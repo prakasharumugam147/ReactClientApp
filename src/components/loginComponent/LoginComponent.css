@@ -1,0 +1,22 @@
+body { 
+  background: url('../../assests//img//Homepage_BG.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.panel-default {
+opacity: 0.9;
+margin-top:30px;
+}
+
+.panel-default>.panel-heading,.panel-default>.panel-footer{
+   background-color: black !important;
+    color: white !important;
+}
+
+.panel-body {
+    background-color:#cecccc;
+}
+.form-group.last { margin-bottom:0px; }

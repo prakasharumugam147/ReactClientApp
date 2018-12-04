@@ -30,12 +30,14 @@ const courseLists=[
 export default class CourseComponent extends Component{
     constructor(props){
         super(props);
-        this.state={selected:null};
+        this.state={angular:null,javascript:null};
     }
 
     onChangeValue=(e)=>{
-        const val=e.target.value.substr(0,e.target.value.length-1);
-        this.setState({[val]:e.target.value});
+        const name=e.target.value.substr(0,e.target.value.length-1);
+        let rating={name,value:e.target.value}
+        this.setState({[rating.name]:rating.value});
+        this.props.getRating(rating);
     }
 
     renderCourses=()=>{
@@ -59,7 +61,7 @@ export default class CourseComponent extends Component{
             </td>
             <td>
                 <label className="radio-inline">
-                    <input type="radio" name="angular" value={`${course.value}4`} onChange={this.onChangeValue} checked={this.state[course.value]===`${course.value}4`}/>
+                    <input type="radio" name={course.value} value={`${course.value}4`} onChange={this.onChangeValue} checked={this.state[course.value]===`${course.value}4`}/>
                 </label>
             </td>
             <td>

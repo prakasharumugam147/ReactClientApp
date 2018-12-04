@@ -1,0 +1,27 @@
+.form-space{
+    padding-bottom:10px;
+}
+
+label {
+    font-weight: bold;
+}
+
+.infobox {
+    border: 1px solid white;
+}
+
+.container{
+    color:white;
+}
+
+.table{
+    text-align: center;
+}
+
+.radio-inline{
+    margin-bottom: 18px;
+}
+
+.form-group.col-sm-12 {
+    margin-bottom: 2%;
+}

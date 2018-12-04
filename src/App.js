@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import FormComponent from './components/FormComponent';
+import Header from './components/header/header';
+import Footer from './components/footer/footer';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <FormComponent />
+      <div>
+        <Header/>
+         
+        <Footer/>
       </div>
     );
   }
