@@ -64,7 +64,7 @@ export default class DashBoard extends Component {
     const { ExportCSVButton } = CSVExport;
     return (
       <div>
-      <button onClick={this.goBack} className="btn btn-primary">Back</button>
+      <button onClick={this.goBack} className="btn btn-primary">Form</button>
       {this.state.loading ? 
         (<ToolkitProvider
         keyField="id"
