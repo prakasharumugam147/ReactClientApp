@@ -5,7 +5,7 @@ import './LoginComponent.css';
 
 class LoginComponent extends Component{
   onSubmit=()=>{
-    this.props.history.push('/dashboard');
+    this.props.history.push('/newentry');
     const logindetails=axios(
       {
         method:'GET',

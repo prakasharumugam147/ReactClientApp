@@ -1,5 +1,7 @@
 import React,{Component} from 'react';
 import axios from 'axios';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import CourseComponent from '../CourseComponent';
 import './FormComponent.css';
 
@@ -7,7 +9,7 @@ export default class FormComponent extends Component{
 
     constructor(props){
         super(props);
-        this.state={recommend:'l2',showBox:true};
+        this.state={recommend:'l2',showBox:true,interviewDate:new Date()};
     }
 
     ChangeHandler=(e)=>{
@@ -31,6 +33,13 @@ export default class FormComponent extends Component{
     getRating=(rating)=>{
         this.setState({[rating.name]:rating.value});
     }
+
+    handleChange=(date)=> {
+        this.setState({
+          interviewDate: date
+        });
+      }
+
     sendData=(data)=>{
         axios.post('http://localhost:3000/feedback',  {
         emp_name:"prakash",
@@ -48,6 +57,7 @@ export default class FormComponent extends Component{
         },
         comment:this.state.comments,
         recommendation:this.state.recommend,
+        interviewdate:this.state.interviewDate,
         status:data
     }).then((response)=>{
         (response.status===200) ? alert("inserted succesfully") : alert("not sucessful")
@@ -56,6 +66,8 @@ export default class FormComponent extends Component{
         console.log(error);
     })
     }
+
+
 
 render(){
     return (
@@ -81,7 +93,13 @@ render(){
                 </div>
             </div>
             <div className="form-inline form-space col-sm-6">
-                <label className="col-sm-4" htmlFor="position">position:</label>
+                <label className="col-sm-4" htmlFor="applicantname">Interview Date:</label>
+                <div className="col-sm-8">          
+                <DatePicker className="form-control" selected={this.state.interviewDate} onChange={this.handleChange} />
+                </div>
+            </div>
+            <div className="form-inline form-space col-sm-6">
+                <label className="col-sm-4" htmlFor="position">Position:</label>
                 <div className="col-sm-8">          
                     <input type="text" className="form-control" id="position" placeholder="Position" name="position" onBlur={this.setValue}/>
                 </div>

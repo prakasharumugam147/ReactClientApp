@@ -1,49 +1,88 @@
 import React,{Component} from "react";
-import ReactDataGrid from "react-data-grid";
+import axios from 'axios';
+import BootstrapTable from 'react-bootstrap-table-next';
+import ToolkitProvider, { CSVExport } from 'react-bootstrap-table2-toolkit';
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import "./dashboard.css";
 
 const columns = [
-  { key: "emp_name", name: "Employee Name", editable: true },
-  { key: "emp_number", name: "Employee Number", editable: true },
-  { key: "applicant", name: "Applicant Name", editable: true },
-  { key: "position", name: "Position", editable: true },
-  { key: "hr_spoc", name: "HR Spoc Name", editable: true }
-];
+  {
+    dataField: 'emp_number',
+    text: 'Employee Number',
+    sort: true
+  },
+  {
+    dataField: 'emp_name',
+    text: 'Employee Number',
+    sort: true
+  },
+  {
+    dataField: 'spocname',
+    text: 'HR Spoc Name',
+    sort: true
+  },
+  {
+    dataField: 'position',
+    text: 'Position',
+    sort: true
+  },
+  {
+    dataField: 'applicantname',
+    text: 'Candidate Name',
+    sort: true
+  },
+  {
+    dataField: 'recommendation',
+    text: 'Recommendation',
+    sort: true
+  }];
 
-const rows = [
-  { emp_number: 0, emp_name: "Task 1", applicant: 20,position:"software engineer",hr_spoc:"pravitha" },
-  { emp_number: 1, emp_name: "Task 2", applicant: 40,position:"SR.Software Engineer",hr_spoc:"pravitha" },
-  { emp_number: 2, emp_name: "Task 3", applicant: 60,position:"software engineer",hr_spoc:"pravitha" }
-];
+export default class DashBoard extends Component {
+  constructor(props){
+    super(props);
+    this.state={rows:null,columns,loading:false}
+  }
 
-export default class DashBoard extends React.Component {
-  state = { rows };
-
-  onGridRowsUpdated = ({ fromRow, toRow, updated }) => {
-    this.setState(state => {
-      const rows = state.rows.slice();
-      for (let i = fromRow; i <= toRow; i++) {
-        rows[i] = { ...rows[i], ...updated };
-      }
-      return { rows };
-    });
-  };
+  componentDidMount(){
+    axios.get('http://localhost:3000/').then((response)=>{
+      console.log(response);
+      const rows=response.data.data.rows.map((row)=>{
+        return row.value
+      });
+      console.log(rows);
+      this.setState({rows,loading:true})
+    }).catch((error)=>{
+      console.log(error);
+    })
+  }
 
   goBack=()=>{
     this.props.history.push('/newentry');
   }
 
   render() {
+    const { ExportCSVButton } = CSVExport;
     return (
       <div>
       <button onClick={this.goBack} className="btn btn-primary">Back</button>
-      <ReactDataGrid
-        columns={columns}
-        rowGetter={i => this.state.rows[i]}
-        rowsCount={5}
-        onGridRowsUpdated={this.onGridRowsUpdated}
-        enableCellSelect={true}
-      />
+      {this.state.loading ? 
+        (<ToolkitProvider
+        keyField="id"
+        data={ this.state.rows }
+        columns={ columns }
+        exportCSV
+      >
+        {
+          props => (
+            <div>
+              <ExportCSVButton { ...props.csvProps }>Export CSV!!</ExportCSVButton>
+              <BootstrapTable { ...props.baseProps } />
+            </div>
+          )
+        }
+      </ToolkitProvider>)
+        :
+        <div>Loading</div>}
       </div>
     );
   }
