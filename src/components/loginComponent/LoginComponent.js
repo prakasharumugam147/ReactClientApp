@@ -4,19 +4,28 @@ import {withRouter} from 'react-router-dom';
 import './LoginComponent.css';
 
 class LoginComponent extends Component{
-  onSubmit=()=>{
-    this.props.history.push('/newentry');
-    const logindetails=axios(
-      {
-        method:'GET',
-        crossDomain:true,
-        url:'http://localhost:3000/login'
-      }).then((response)=>{
+    constructor(props){
+        super(props);
+        this.state={employeeid:null,password:null}
+        this.onSubmit=this.onSubmit.bind(this);
+    }
+
+  onSubmit(e){
+    e.preventDefault();
+    const logindetails=axios.post('http://localhost:3000/login',{
+        employeeid:parseInt(this.state.employeeid),
+        password:this.state.password
+    }).then((response)=>{
       console.log(response);
+      if(response.data.loginsuccess){this.props.history.push({pathname:'/newentry',state:response.data})}else{alert('wrong user entry')};
     })
     .catch((error)=>{
       console.log(error);
     })
+  }
+
+  getValue=(e)=>{
+    this.setState({[e.target.name]:e.target.value});
   }
 
   render(){
@@ -34,14 +43,14 @@ class LoginComponent extends Component{
                         <label forName="nokp" className="col-sm-3 control-label">
                             Emp ID:</label>
                         <div className="col-sm-9">
-                            <input type="text" className="form-control" id="nokp" placeholder="enter employee id" required />
+                            <input type="text" className="form-control" id="employeeid" name="employeeid" placeholder="enter employee id" onChange={this.getValue} required />
                         </div>
                     </div>
                     <div className="form-group">
                         <label forName="nopend" className="col-sm-3 control-label">
                             Password</label>
                         <div className="col-sm-9">
-                            <input type="password" className="form-control" id="nopend" placeholder="Password" required />
+                            <input type="password" name="password" className="form-control" id="password" placeholder="Password" onChange={this.getValue} required />
                         </div>
                     </div>
                     <div className="form-group">
@@ -60,9 +69,6 @@ class LoginComponent extends Component{
                         </div>
                     </div>
                     </form>
-                </div>
-                <div className="panel-footer">
-                    Not Registred? <a href="#/">Register here</a>
                 </div>
             </div>
         </div>

@@ -1,11 +1,12 @@
 import React,{Component} from 'react';
 import axios from 'axios';
+import {withRouter} from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import CourseComponent from '../CourseComponent';
 import './FormComponent.css';
 
-export default class FormComponent extends Component{
+ class FormComponent extends Component{
 
     constructor(props){
         super(props);
@@ -40,7 +41,7 @@ export default class FormComponent extends Component{
         });
       }
 
-    sendData=(data)=>{
+    submitData=(data)=>{
         axios.post('http://localhost:3000/feedback',  {
         emp_name:"prakash",
         emp_number:"34783743",
@@ -60,7 +61,7 @@ export default class FormComponent extends Component{
         interviewdate:this.state.interviewDate,
         status:data
     }).then((response)=>{
-        (response.status===200) ? alert("inserted succesfully") : alert("not sucessful")
+        if(response.status===200){alert("inserted succesfully");this.props.history.push('/dashboard')}else{alert("not sucessful")}
     })
     .catch((error)=>{
         console.log(error);
@@ -70,44 +71,46 @@ export default class FormComponent extends Component{
 
 
 render(){
+    const { name,employeeid }=this.props.history.location.state.state;
+    console.log(this.props.history.location.state);
     return (
     <div className="container">
-        <h4>Candidate Evaluation Form(Responsive Design)</h4>
-        <form className="form-inline">
+        <h4>Candidate Evaluation Form</h4>
+        <form className="form-horizontal" role="form" onSubmit={this.onSubmit}>
             <div className="form-inline form-space col-sm-6">
                 <label className="col-sm-4" htmlFor="emp_name">Employee Name:</label>
                 <div className="col-sm-8">
-                    <input type="text" disabled className="form-control" id="emp_name" placeholder="Employee Name" name="emp_name" onBlur={this.setValue}/>
+                    <input type="text" disabled className="form-control" value={name} id="emp_name" placeholder="Employee Name" name="emp_name" onBlur={this.setValue}/>
                 </div>
             </div>
             <div className="form-inline form-space col-sm-6">
                 <label className="col-sm-4" htmlFor="emp_number">Employee Number:</label>
                 <div className="col-sm-8">          
-                    <input type="text" disabled className="form-control" id="emp_number" placeholder="Employee Number" name="emp_number" onBlur={this.setValue}/>
+                    <input type="text" disabled className="form-control" value={employeeid} id="emp_number" placeholder="Employee Number" name="emp_number" onBlur={this.setValue}/>
                 </div>
             </div>
             <div className="form-inline form-space col-sm-6">
                 <label className="col-sm-4" htmlFor="applicantname">Applicant Name:</label>
                 <div className="col-sm-8">          
-                    <input type="text" className="form-control" id="app_name" placeholder="Applicant Name" name="applicantname" onBlur={this.setValue}/>
+                    <input type="text" className="form-control" id="app_name" placeholder="Applicant Name" name="applicantname" onBlur={this.setValue} required/>
                 </div>
             </div>
             <div className="form-inline form-space col-sm-6">
                 <label className="col-sm-4" htmlFor="applicantname">Interview Date:</label>
                 <div className="col-sm-8">          
-                <DatePicker className="form-control" selected={this.state.interviewDate} onChange={this.handleChange} />
+                <DatePicker className="form-control" selected={this.state.interviewDate} onChange={this.handleChange} required/>
                 </div>
             </div>
             <div className="form-inline form-space col-sm-6">
                 <label className="col-sm-4" htmlFor="position">Position:</label>
                 <div className="col-sm-8">          
-                    <input type="text" className="form-control" id="position" placeholder="Position" name="position" onBlur={this.setValue}/>
+                    <input type="text" className="form-control" id="position" placeholder="Position" name="position" onBlur={this.setValue} required/>
                 </div>
             </div>
             <div className="form-inline form-space col-sm-6">
                 <label className="col-sm-4" htmlFor="spocname">HR Spoc Name:</label>
                 <div className="col-sm-8">          
-                    <input type="text" className="form-control" id="spoc_name" placeholder="Spoc Name" name="spocname" onBlur={this.setValue}/>
+                    <input type="text" className="form-control" id="spoc_name" placeholder="Spoc Name" name="spocname" onBlur={this.setValue} required/>
                 </div>
             </div>
             <div className="col-sm-12">
@@ -136,11 +139,13 @@ render(){
                 </label>
             </div>
             <div className="form-group col-sm-12">
-                <button type="button" className="btn btn-success col-xs-12 col-sm-2" onClick={()=>this.sendData("selected")}>Selected</button>
-                <button type="button" className="btn btn-danger col-xs-12 col-sm-offset-1 col-sm-2" onClick={()=>this.sendData("rejected")}>Rejected</button>
+                <input type="button"  onClick={()=>this.submitData('Selected')} className="btn btn-success col-xs-12 col-sm-2" value="Selected"/>
+                <input type="button" onClick={()=>this.this.submitData('rejected')} className="btn btn-danger col-xs-12 col-sm-offset-1 col-sm-2" value="Rejected"/>
             </div>
-    </form>
+            </form>
   </div>
     );
 }
 }
+
+export default withRouter(FormComponent);

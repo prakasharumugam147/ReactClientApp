@@ -13,7 +13,7 @@ const columns = [
   },
   {
     dataField: 'emp_name',
-    text: 'Employee Number',
+    text: 'Employee Name',
     sort: true
   },
   {
