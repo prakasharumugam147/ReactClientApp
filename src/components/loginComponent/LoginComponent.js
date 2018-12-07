@@ -1,5 +1,8 @@
 import React,{Component} from 'react';
 import axios from 'axios';
+import {connect} from 'react-redux';
+import login from '../../actions';
+import {bindActionCreators} from 'redux';
 import {withRouter} from 'react-router-dom';
 import './LoginComponent.css';
 
@@ -12,16 +15,8 @@ class LoginComponent extends Component{
 
   onSubmit(e){
     e.preventDefault();
-    const logindetails=axios.post('http://localhost:3000/login',{
-        employeeid:parseInt(this.state.employeeid),
-        password:this.state.password
-    }).then((response)=>{
-      console.log(response);
-      if(response.data.loginsuccess){this.props.history.push({pathname:'/newentry',state:response.data})}else{alert('wrong user entry')};
-    })
-    .catch((error)=>{
-      console.log(error);
-    })
+    this.props.login(this.state.employeeid,this.state.password);
+    
   }
 
   getValue=(e)=>{
@@ -78,4 +73,18 @@ class LoginComponent extends Component{
   }
 }
 
-export default withRouter(LoginComponent);
+const Login=withRouter(LoginComponent);
+
+function mapStateToProps(state){
+    return{
+        isAuthenticated:state.isAuthenticated
+    }
+}
+
+function mapDispatchToProps(dispatch,ownProps){
+    return{
+        login:bindActionCreators(login,dispatch)
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Login);
