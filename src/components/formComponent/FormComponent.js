@@ -1,12 +1,13 @@
 import React,{Component} from 'react';
 import axios from 'axios';
 import {withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import CourseComponent from '../CourseComponent';
 import './FormComponent.css';
 
- class FormComponent extends Component{
+ class Form extends Component{
 
     constructor(props){
         super(props);
@@ -71,8 +72,8 @@ import './FormComponent.css';
 
 
 render(){
-    const { name,employeeid }=this.props.history.location.state.state;
-    console.log(this.props.history.location.state);
+    const { name,employeeid }=this.props;
+    console.log(this.props);
     return (
     <div className="container">
         <h4>Candidate Evaluation Form</h4>
@@ -125,7 +126,7 @@ render(){
                 </div><div onClick={()=>this.showInfo(false)}>Hide</div></div>):<div onClick={()=>this.showInfo(true)}>show</div>}
             </div>
             <CourseComponent getRating={this.getRating}/>
-            <div className="form-group col-sm-12">
+            <div className="form-group col-sm-6">
                 <label htmlFor="comment" className="col-sm-2">Comment:</label>
                 <textarea className="form-control col-sm-6" rows="3" name="comments" id="comment" onBlur={this.setValue}></textarea>
             </div>
@@ -148,4 +149,13 @@ render(){
 }
 }
 
-export default withRouter(FormComponent);
+const FormComponent=withRouter(Form);
+
+const mapStateToProps =(state)=>{
+    return {
+        name:state.loginreducer.name,
+        employeeid:state.loginreducer.employeeid
+    }
+}
+
+export default connect(mapStateToProps,null)(FormComponent);

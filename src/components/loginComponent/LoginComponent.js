@@ -1,9 +1,9 @@
 import React,{Component} from 'react';
-import axios from 'axios';
 import {connect} from 'react-redux';
-import login from '../../actions';
+
+import {login} from '../../actions';
 import {bindActionCreators} from 'redux';
-import {withRouter} from 'react-router-dom';
+import {withRouter,Redirect} from 'react-router-dom';
 import './LoginComponent.css';
 
 class LoginComponent extends Component{
@@ -16,15 +16,18 @@ class LoginComponent extends Component{
   onSubmit(e){
     e.preventDefault();
     this.props.login(this.state.employeeid,this.state.password);
-    
-  }
+}
 
   getValue=(e)=>{
     this.setState({[e.target.name]:e.target.value});
   }
 
   render(){
-    return(
+    return (this.props.isAuthenticated) ?
+        <Redirect to="/newentry"/>
+        //this.props.history.push({pathname:"/newentry",state:{employeeid:this.state.employeeid,password:this.state.password}})
+    :
+    (
     <div className="container">
     <div className="row">
         <div className="col-md-4 col-md-offset-7">
@@ -70,14 +73,15 @@ class LoginComponent extends Component{
     </div>
 </div>
     );
-  }
+}
 }
 
 const Login=withRouter(LoginComponent);
 
 function mapStateToProps(state){
+    console.log('---log---',state.loginreducer)
     return{
-        isAuthenticated:state.isAuthenticated
+        isAuthenticated:state.loginreducer.isAuthenticated
     }
 }
 

@@ -10,6 +10,10 @@ label {
     border: 1px solid white;
 }
 
+input[type="radio"] {
+    position: relative !important;
+}
+
 .container{
     color:white;
 }
