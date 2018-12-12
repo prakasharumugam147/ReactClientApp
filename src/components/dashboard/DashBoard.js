@@ -1,5 +1,7 @@
 import React,{Component} from "react";
 import axios from 'axios';
+import {connect} from 'react-redux';
+import {Redirect } from 'react-router-dom';
 import BootstrapTable from 'react-bootstrap-table-next';
 import ToolkitProvider, { CSVExport } from 'react-bootstrap-table2-toolkit';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
@@ -37,7 +39,7 @@ const columns = [
     sort: true
   }];
 
-export default class DashBoard extends Component {
+class DashBoard extends Component {
   constructor(props){
     super(props);
     this.state={rows:null,columns,loading:false}
@@ -62,7 +64,10 @@ export default class DashBoard extends Component {
 
   render() {
     const { ExportCSVButton } = CSVExport;
-    return (
+    return (!this.props.isAuthenticated) ?
+    <Redirect to="/login"/>
+    :
+    (
       <div>
       <button onClick={this.goBack} className="btn btn-primary">Form</button>
       {this.state.loading ? 
@@ -87,3 +92,11 @@ export default class DashBoard extends Component {
     );
   }
 }
+
+function mapStateToProps(state){
+  return{
+    isAuthenticated:state.loginreducer.isAuthenticated
+  }
+}
+
+export default connect(mapStateToProps,null)(DashBoard);

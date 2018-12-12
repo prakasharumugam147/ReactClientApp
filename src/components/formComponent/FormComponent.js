@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import axios from 'axios';
-import {withRouter} from 'react-router-dom';
+import {withRouter,Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -73,8 +73,10 @@ import './FormComponent.css';
 
 render(){
     const { name,employeeid }=this.props;
-    console.log(this.props);
-    return (
+    return (!this.props.isAuthenticated) ?
+    <Redirect to="/login"/>
+    :
+    (
     <div className="container">
         <h4>Candidate Evaluation Form</h4>
         <form className="form-horizontal" role="form" onSubmit={this.onSubmit}>
@@ -154,7 +156,8 @@ const FormComponent=withRouter(Form);
 const mapStateToProps =(state)=>{
     return {
         name:state.loginreducer.name,
-        employeeid:state.loginreducer.employeeid
+        employeeid:state.loginreducer.employeeid,
+        isAuthenticated:state.loginreducer.isAuthenticated
     }
 }
 

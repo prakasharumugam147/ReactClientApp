@@ -1,6 +1,5 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
-
 import {login} from '../../actions';
 import {bindActionCreators} from 'redux';
 import {withRouter,Redirect} from 'react-router-dom';

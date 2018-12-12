@@ -1,5 +1,6 @@
 import axios from 'axios';
 export const IS_LOGIN='IS_LOGIN';
+export const IS_LOGOUT='IS_LOGOUT';
 
 const loginAsync=(res)=>{
   return{
@@ -21,4 +22,11 @@ export const login=(username,password)=>{
       return error;
     });
   }
+}
+
+export const logOutAction=()=>{
+    return{
+        type:IS_LOGOUT,
+        payload:false
+    }
 }
