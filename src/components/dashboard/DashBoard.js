@@ -46,7 +46,7 @@ class DashBoard extends Component {
   }
 
   componentDidMount(){
-    axios.get('http://localhost:3000/').then((response)=>{
+    axios.get('http://localhost:4000/').then((response)=>{
       console.log(response);
       const rows=response.data.data.rows.map((row)=>{
         return row.value
@@ -68,7 +68,7 @@ class DashBoard extends Component {
     <Redirect to="/login"/>
     :
     (
-      <div>
+      <div className="container">
       <button onClick={this.goBack} className="btn btn-primary">Form</button>
       {this.state.loading ? 
         (<ToolkitProvider

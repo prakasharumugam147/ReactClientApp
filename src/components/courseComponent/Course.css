@@ -1,0 +1,19 @@
+.formdata {
+  border-bottom: 1px solid black;
+  margin-bottom: 15px;
+  padding-bottom: 12px;
+}
+
+tr{
+  width:100%;
+}
+
+input[type="radio"] {
+  margin-right: 5px;
+  width: 15px;
+  height: 15px;
+}
+
+td{
+  padding-right: 60px;
+}

@@ -12,11 +12,11 @@ margin-top:30px;
 }
 
 .panel-default>.panel-heading,.panel-default>.panel-footer{
-   background-color: black !important;
+   background-color:#116165 !important;
     color: white !important;
 }
 
 .panel-body {
-    background-color:#cecccc;
+    background-color:#565656;
 }
 .form-group.last { margin-bottom:0px; }

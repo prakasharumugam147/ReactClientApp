@@ -4,7 +4,7 @@ import {withRouter,Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import CourseComponent from '../CourseComponent';
+import CourseComponent from '../courseComponent/CourseComponent';
 import './FormComponent.css';
 
  class Form extends Component{
@@ -43,19 +43,60 @@ import './FormComponent.css';
       }
 
     submitData=(data)=>{
-        axios.post('http://localhost:3000/feedback',  {
-        emp_name:"prakash",
-        emp_number:"34783743",
+        axios.post('http://localhost:4000/feedback',  {
+        emp_name:this.props.name,
+        emp_number:this.props.employeeid,
         applicantname:this.state.applicantname,
         position:this.state.position,
         spocname:this.state.spocname,
         rating:{
-          angular:this.state.angular,
-          javascript:this.state.javascript,
-          html:this.state.html,
-          css:this.state.css,
-          testingtool:this.state.testingtool,
-          subversion:this.state.subversion
+           html:{
+              forms:this.state.forms,
+              newfeatures:this.state.newfeatures,
+              graphics:this.state.graphics,
+              htmlmedia:this.state.htmlmedia,
+              geolocation:this.state.geolocation,
+              cssconcepts:this.state.cssconcepts
+           },
+           css:{
+            cssconcepts:this.state.cssconcepts,
+            csssprites:this.state.csssprites,
+            cssadvanced:this.state.cssadvanced,
+            cssresponsive:this.state.cssresponsive,
+            cssreference:this.state.cssreference
+           },
+           javascript:{
+            jsbasicpart1:this.state.jsbasicpart1,
+            jsbasicpart2:this.state.jsbasicpart2,
+            jsbasicpart3:this.state.jsbasicpart3,
+            jsdomevent:this.state.jsdomevent,
+            jsbrowser:this.state.jsbrowser,
+            jsjson:this.state.jsjson
+           },
+           advancejs:{
+            advancejspart1:this.state.advancejspart1,
+            advancejspart2:this.state.advancejspart2,
+            advancejspart3:this.state.advancejspattern,
+            jsprototype:this.state.jsprototype
+           },
+           angularjs:{
+            angularpart1:this.state.angularpart1,
+            angularpart2:this.state.angularpart2,
+            angularpart3:this.state.angularpart3,
+            angularpart4:this.state.angularpart4,
+            angularadvance:this.state.angularadvance,
+            angulartesting:this.state.angulartesting
+           },
+           techcomp:{
+            techcomppattern:this.state.techcomppattern,
+            techcomptesting:this.state.techcomptesting,
+            techcompnfr:this.state.techcompnfr
+           },
+           processtools:{
+            buildtools:this.state.buildtools,
+            sdlc:this.state.sdlc,
+            repository:this.state.repository
+           }
         },
         comment:this.state.comments,
         recommendation:this.state.recommend,
@@ -143,7 +184,7 @@ render(){
             </div>
             <div className="form-group col-sm-12">
                 <input type="button"  onClick={()=>this.submitData('Selected')} className="btn btn-success col-xs-12 col-sm-2" value="Selected"/>
-                <input type="button" onClick={()=>this.this.submitData('rejected')} className="btn btn-danger col-xs-12 col-sm-offset-1 col-sm-2" value="Rejected"/>
+                <input type="button" onClick={()=>this.submitData('rejected')} className="btn btn-danger col-xs-12 col-sm-offset-1 col-sm-2" value="Rejected"/>
             </div>
             </form>
   </div>

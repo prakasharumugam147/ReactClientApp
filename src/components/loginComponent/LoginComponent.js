@@ -78,7 +78,6 @@ class LoginComponent extends Component{
 const Login=withRouter(LoginComponent);
 
 function mapStateToProps(state){
-    console.log('---log---',state.loginreducer)
     return{
         isAuthenticated:state.loginreducer.isAuthenticated
     }
