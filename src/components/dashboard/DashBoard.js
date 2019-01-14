@@ -37,6 +37,11 @@ const columns = [
     dataField: 'recommendation',
     text: 'Recommendation',
     sort: true
+  },
+  {
+    dataField: 'status',
+    text: 'Status',
+    sort: true
   }];
 
 class DashBoard extends Component {

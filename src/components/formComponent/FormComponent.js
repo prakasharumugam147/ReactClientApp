@@ -43,6 +43,18 @@ import './FormComponent.css';
       }
 
     submitData=(data)=>{
+    if(this.state.applicantname && this.state.position && this.state.spocname
+       && this.state.forms && this.state.newfeatures && this.state.graphics &&
+      this.state.htmlmedia && this.state.geolocation && this.state.cssconcepts
+      && this.state.csssprites && this.state.cssadvanced && this.state.cssresponsive
+      && this.state.cssreference && this.state.cssreference &&
+      this.state.jsbasicpart1 && this.state.jsbasicpart2 && this.state.jsbasicpart3 && 
+      this.state.jsdomevent && this.state.jsbrowser && this.state.jsjson && this.state.advancejspart1 &&
+      this.state.advancejspart2 && this.state.advancejspattern && this.state.jsprototype 
+      && this.state.angularpart1 && this.state.angularpart2 && this.state.this.state.angularpart3
+      && this.state.angularpart4 && this.state.angularadvance && this.state.angulartesting
+      && this.state.techcomppattern && this.state.techcompnfr && this.state.buildtools
+      && this.state.sdlc && this.state.repository){    
         axios.post('http://localhost:4000/feedback',  {
         emp_name:this.props.name,
         emp_number:this.props.employeeid,
@@ -55,8 +67,7 @@ import './FormComponent.css';
               newfeatures:this.state.newfeatures,
               graphics:this.state.graphics,
               htmlmedia:this.state.htmlmedia,
-              geolocation:this.state.geolocation,
-              cssconcepts:this.state.cssconcepts
+              geolocation:this.state.geolocation
            },
            css:{
             cssconcepts:this.state.cssconcepts,
@@ -108,6 +119,9 @@ import './FormComponent.css';
     .catch((error)=>{
         console.log(error);
     })
+} else{
+    alert("please enter values for all fields")
+}
     }
 
 
